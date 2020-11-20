@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="report_sale_form_template_inherit1" inherit_id="crm_extension.report_sale_form_template">
+            <xpath expr="//span[@t-raw='o.gethtmlval(o.schedule_a)']" position="replace">
+                <t t-if="data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_a_eng)"/>
+                </t>
+                <t t-if="not data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_a)"/>
+                </t>
+            </xpath>
+            <xpath expr="//span[@t-raw='o.gethtmlval(o.schedule_b)']" position="replace">
+                <t t-if="data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_b_eng)"/>
+                </t>
+                <t t-if="not data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_b)"/>
+                </t>
+            </xpath>
+            <xpath expr="//span[@t-raw='o.gethtmlval(o.schedule_c)']" position="replace">
+                <t t-if="data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_c_eng)"/>
+                </t>
+                <t t-if="not data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_c)"/>
+                </t>
+            </xpath>
+            <xpath expr="//span[@t-raw='o.gethtmlval(o.schedule_d)']" position="replace">
+                <t t-if="data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_d_eng)"/>
+                </t>
+                <t t-if="not data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_d)"/>
+                </t>
+            </xpath>
+            <xpath expr="//span[@t-raw='o.gethtmlval(o.schedule_e)']" position="replace">
+                <t t-if="data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_e_eng)"/>
+                </t>
+                <t t-if="not data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_e)"/>
+                </t>
+            </xpath>
+            <xpath expr="//span[@t-raw='o.gethtmlval(o.schedule_f)']" position="replace">
+                <t t-if="data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_f_eng)"/>
+                </t>
+                <t t-if="not data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_f)"/>
+                </t>
+            </xpath>
+            <xpath expr="//span[@t-raw='o.gethtmlval(o.schedule_g)']" position="replace">
+                <t t-if="data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_g_eng)"/>
+                </t>
+                <t t-if="not data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_g)"/>
+                </t>
+            </xpath>
+            <xpath expr="//span[@t-raw='o.gethtmlval(o.schedule_h)']" position="replace">
+                <t t-if="data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_h_eng)"/>
+                </t>
+                <t t-if="not data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_h)"/>
+                </t>
+            </xpath>
+            <xpath expr="//span[@t-raw='o.gethtmlval(o.schedule_i)']" position="replace">
+                <t t-if="data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_i_eng)"/>
+                </t>
+                <t t-if="not data['english']">
+                    <span t-raw="o.gethtmlval(o.schedule_i)"/>
+                </t>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

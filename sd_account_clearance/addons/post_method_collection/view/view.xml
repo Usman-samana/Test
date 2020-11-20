@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_account_payment_form_pdc_inherit">
+            <field name="name">account.payment.pdc.form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account_pdc.view_account_payment_form_pdc"/>
+            <field name="arch" type="xml">
+                <button name="post" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('other_payment','=',True),('state','not in',['draft','approved'])]}</attribute>
+                </button>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>

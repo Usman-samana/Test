@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+    <!--Tenancy Rent Schedule Form view-->
+    <record id="sale_rent_form_mail" model="ir.ui.view">
+        <field name="name">sale.rent.schedule.form.mail</field>
+        <field name="model">sale.rent.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Rent Schedule" create="false" edit="false" delete="false">
+                <header>
+                    <button name="open_pay_form" string="Pay" type="object" class="oe_highlight"/>
+                    <!--<field name="state" widget="statusbar"/>-->
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="cheque_detail"/>
+                            <field name="start_date"/>
+                            <field name="booking_id"/>
+                            <!--<field name="rel_tenant_id"/>-->
+                            <field name="company_id"/>
+                            <field name="currency_id"/>
+                        </group>
+                        <group>
+                            <field name="calculation"/>
+                            <div attrs="{'invisible':[('calculation','=', 'balance')]}" class="o_row">
+                                <label for="value" attrs="{'invisible':[('calculation','=', 'balance')]}"/>
+                                <field name="value" class="oe_inline"/>
+                                <span class="o_form_label oe_inline" attrs="{'invisible':[('calculation','!=','percent')]}">%</span>
+                            </div>
+                            <field name="amount"/>
+
+                            <field name="receipt_total"/>
+                            <field name="receipt_date"/>
+                            <field name="delay_days"/>
+                            <field name="surcharge" readonly="1"/>
+                            <field name="pen_amt"/>
+                            <field name="partner_id"/>
+                            <field name="sale_id"/>
+                            <field name="property_id"/>
+                            <field name="installment_status"/>
+                            <field name="move_check"/>
+                            <field name="paid"/>
+                            <field name="is_readonly" invisible="1"/>
+                            <field name="invc_id" invisible="1"/>
+                            <field name="inv" invisible="1"/>
+                        </group>
+                    </group>
+
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Action for Tenancy Rent Schedule view-->
+    <record id="action_sale_rent_mail" model="ir.actions.act_window">
+        <field name="name">Tenancy Rent Schedule</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.rent.schedule</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="sale_rent_form_mail"/>
+        <field name="view_mode">form</field>
+    </record>
+
+        <record id="no_jv_creation_readable" model="ir.ui.view">
+            <field name="name">account.move.unreadable</field>
+            <field name="model">account.move</field>
+            <field name="groups_id" eval="[(6, 0, [ref('sale_rent_schedule_custom.no_jv_creation')])]"/>
+            <field name="inherit_id" ref="account.view_move_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_move_form_no_jv_creation_readable" model="ir.ui.view">
+            <field name="name">account.move.form.unreadable</field>
+            <field name="model">account.move</field>
+            <field name="groups_id" eval="[(6, 0, [ref('sale_rent_schedule_custom.no_jv_creation')])]"/>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="email_next_installment" model="mail.template">
+            <field name="name">Next Instalment</field>
+            <field name="email_from">${object.company_id and object.company_id.email or ''}</field>
+            <field name="subject">Next Instalment dated ${object.start_date.strftime('%B %d, %Y')}</field>
+            <field name="partner_to">${object.partner_id.id}</field>
+            <field name="lang">${user.partner_id.lang}</field>
+            <field name="model_id" ref="crm_extension.model_sale_rent_schedule"/>
+            <field name="auto_delete" eval="False"/>
+            <!--<field name="attachment_ids" eval="[(6, 0, [ref(${object.success_mail.lang})])]"/>-->
+            <field name="body_html">
+               <![CDATA[
+        <p>Dear <b>${object.partner_id.name}</b>,<br/><br/>
+        Greetings from Samana.<br/><br/>
+        We hope that this email finds you in good health.<br/><br/>
+        This is to remind you that the next installment amounted AED ${object.amount} for your unit# ${object.property_id.name} of ${object.asset_property_id.name} will be due on ${object.start_date.strftime('%B %d, %Y')}. To view the installment, pls <a href="${object.get_url(object)}">Click Here
+        </a>
+        <br/><br/>
+        If you wish to make the payment online please click http://samanadevelopers.com/pay/
+        <br/><br/>
+        In case of bank transfers, please send us the payment advice once the transfer is done so that your payments may be allocated to your account without fail.
+        <br/><br/>
+        Please note that a Late-Payment Penalty of AED 5,000 will be applicable in case of any delay of payment and we strongly suggest that you make the payment well in advance in order to avoid any delays due to procedures and protocols.
+        <br/><br/>
+        We thank you in advance for your understanding and assistance in this matter and should you have any queries please do not hesitate to reach out to us at receivables@samana-group.com
+        <br/><br/>
+        <b>Please ignore this message if you have already paid</b>
+        <br/><br/>
+        Thanks & Regards
+        <br/>
+        Samana International Real Estate Development
+        <br/><br/>
+        <p style="color: #8b0000;">*Please do not reply on this email as this is system generated.</p>
+        <br/>
+        </p>
+        ]]>
+            </field>
+        </record>
+
+
+        <!--<record id="email_next_installment" model="mail.template">-->
+            <!--<field name="name">Next Instalment</field>-->
+            <!--<field name="model_id" ref="crm_extension.model_sale_rent_schedule"/>-->
+            <!--<field name="email_from">${object.company_id and object.company_id.email or ''}</field>-->
+            <!--<field name="partner_to">${object.partner_id.id}</field>-->
+            <!--<field name="subject">Next Instalment  ${object.start_date}</field>-->
+            <!--<field name="subject">Next Instalment dated ${object.start_date}</field>-->
+            <!--<field name="lang">${user.partner_id.lang}</field>-->
+            <!--<field name="body_html" type="html">-->
+        <!--<![CDATA[-->
+        <!--<p>Dear Customer Name <b>${object.start_date}</b>,<br/><br/>-->
+        <!--Subject: Re: Next Installment DATED <b> ${object.start_date} </b>.<br/><br/>-->
+        <!--Greetings from Samana.<br/><br/>-->
+        <!--We hope that this email finds you in good health.<br/><br/>-->
+        <!--This is to remind you that the next installment for your property at Samana Hills will be due on <b> ${object.start_date} </b>. To view the installment, pls. click here (Click here)-->
+        <!--<br/><br/>-->
+        <!--If you wish to make the payment online please click http://samanadevelopers.com/pay/-->
+        <!--<br/><br/>-->
+        <!--In case of bank transfers, please send us the payment advice once the transfer is done so that your payments may be allocated to your account without fail.-->
+        <!--<br/><br/>-->
+        <!--Please note that a Late-Payment Penalty of AED 5,000 will be applicable in case of any delay of payment and we strongly suggest that you make the payment well in advance in order to avoid any delays due to procedures and protocols.-->
+        <!--<br/><br/>-->
+        <!--We thank you in advance for your understanding and assistance in this matter and should you have any queries please do not hesitate to reach out to us at receivables@samana-group.com-->
+        <!--<br/><br/>-->
+        <!--Thanks & Regards-->
+        <!--<br/>-->
+        <!--Samana International Real Estate Development-->
+        <!--<br/><br/>-->
+        <!--</p>-->
+        <!--]]>-->
+            <!--</field>-->
+            <!--<field name="auto_delete" eval="True"/>-->
+        <!--</record>-->
+
+
+    </data>
+</odoo>

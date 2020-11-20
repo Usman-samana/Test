@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<record id="Account_clearance" model="ir.ui.view">
+        <field name="name">account.clearance.tree</field>
+        <field name="model">account.clearance</field>
+        <field name="arch" type="xml">
+            <tree string="Account Clearance">
+              <field name="partner_id"/>
+                            <field name="mobile"/>
+                            <field name="email"/>
+                            <field name="nationality"/>
+                            <field name="address"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="account_clearance" model="ir.ui.view">
+        <field name="name">Accounts Clearance</field>
+        <field name="model">account.clearance</field>
+        <field name="arch" type="xml">
+
+            <form string="Account Clearance">
+
+                <header>
+                    <button name="action_draft" string="Back to Draft" type="object" class="oe_highlight"
+                            states="cancel"/>
+                    <button name="submit" string="Submit to Accounts" type="object" class="oe_highlight"
+                            states="draft" groups="account.group_account_user"/>
+                    <button name="verify" string="Verify" type="object" class="oe_highlight"
+                            states="under_accounts_verification" groups="sales_team.group_sale_manager"/>
+                    <button name="review" string="Review" type="object" class="oe_highlight" states="under_review"
+                            groups="account_voucher_collection.group_general_manager"/>
+                    <button name="approve" string="Approve" type="object" class="oe_highlight" states="under_approval"
+                            groups="account_voucher_collection.group_general_manager"/>
+                    <button name="action_reject" string="Reject" type="object"
+                            states="under_accounts_verification,under_review,under_approval,approved"/>
+                    <button name="action_cancel" string="Cancel" type="object" states="draft,rejected"/>
+                    <field name='state' widget='statusbar'/>
+                </header>
+                <sheet>
+
+                    <h1>ACCOUNTS CLEARANCE REQUEST FORM</h1>
+                    <div class="oe_title">
+                        <h3>
+                            <field name="sequence" nolabel="1"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="subject"/>
+                            <field name="clearance_type"/>
+                            <field name="create_uid" readonly="1"/>
+                            <field name="create_date" readonly="1"/>
+                            <field name="total_spa_customer"/>
+                            <field name="total_bookings"/>
+                        </group>
+                        <group>
+                            <separator string="Customer Details"/>
+                            <field name="name" invisible="1"/>
+                            <field name="partner_id"/>
+                            <field name="mobile"/>
+                            <field name="email"/>
+                            <field name="nationality"/>
+                            <field name="address"/>
+
+                        </group>
+                        <group>
+                            <separator string="SPA Details"/>
+                            <field name="spa"/>
+                            <field name="spa_status"/>
+                            <field name="booking_id" domain="[('is_buy_state','!=', 'cancel')]"/>
+                            <field name="booking_status"/>
+                            <field name="project" domain="[('project','=', True)]"/>
+                            <field name="property" domain="[('parent_id','=', project)]"/>
+                            <field name="total_spa" widget="monetary"/>
+                            <field name="total_due_amount" widget="monetary"/>
+                            <field name="total_collection" widget="monetary"/>
+                            <field name="due_balance_collections" widget="monetary"/>
+                            <field name="pending_collections" widget="monetary"/>
+                        </group>
+                        <group>
+                            <separator string="Accounts Remarks"/>
+                            <field name="due_amount_to_clear"/>
+                            <field name="account_remarks"/>
+                        </group>
+                    </group>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="action_accounts" model="ir.actions.act_window">
+        <field name="name">Accounts Clearance</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.clearance</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Accounts Clearance Request Form!
+            </p>
+        </field>
+    </record>
+    <menuitem id="account_clearance_form" name="Account Clearance" parent="crm.crm_menu_sales" sequence="6"
+              action="action_accounts" groups="sales_team.group_sale_salesman_all_leads"/>
+    <menuitem id="account_clearance_form_accounting" name="Account Clearance" parent="account.menu_finance_receivables"
+              sequence="4"
+              action="action_accounts" groups="sales_team.group_sale_salesman_all_leads"/>
+</odoo>

@@ -1,0 +1,184 @@
+<odoo>
+    <template id="installment_template">
+        <!--<t t-call="website.layout">-->
+         <style>
+
+            .table-bordered {
+                      border: 1px solid black;
+                        margin: 6px;
+                    }
+
+                    .table-bordered th,
+                    .table-bordered tr,
+                    .table-bordered td {
+                      border: 1px solid black;
+
+                    }
+
+                    .table-bordered thead th,
+                    .table-bordered thead tr,
+                    .table-bordered thead td {
+                      border-bottom-width: 1px;
+                    }
+
+            .table {
+                  width: 98%;
+                  margin-bottom: 1rem;
+                  background-color: transparent;
+                }
+
+                .table th,
+                .table td {
+                  padding: 0.3rem;
+                  vertical-align: top;
+                  border-top: 1px solid balck;
+                }
+
+                .table thead th {
+                  vertical-align: bottom;
+                  border-bottom: 1px solid black;
+                }
+
+                .table tbody + tbody {
+                  border-top: 1px solid black;
+                }
+
+        </style>
+        <h1 style="width:98%; text-align: center;">Installment Details</h1>
+        <br></br>
+          <a href="http://samanadevelopers.com/pay/" style="background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;">Pay
+        </a>
+        <br/>
+        <br/>
+
+            <table class="table table-bordered">
+                <tr>
+                    <td ><strong>Customer</strong></td>
+                    <td><t t-esc="customer" /></td>
+                    <td ><strong>Installment Amount</strong></td>
+                    <td><t t-esc="amount" /></td>
+                </tr>
+                <tr>
+                    <td ><strong>Booking</strong></td>
+                    <td><t t-esc="booking" /></td>
+                    <td><strong>Received Amount</strong></td>
+                    <td><t t-esc="receipt_total" /></td>
+                </tr>
+                <tr>
+                    <td ><strong>Sale</strong></td>
+                    <td><t t-esc="sale" /></td>
+                    <td><strong>Surcharge</strong></td>
+                    <td><t t-esc="surcharge" /></td>
+                </tr>
+                <tr>
+                    <td><strong>Project</strong></td>
+                    <td><t t-esc="project" /></td>
+                    <td ><strong>Overdue Amount</strong></td>
+                    <td><t t-esc="overdue" /></td>
+                </tr>
+                <tr>
+                    <td><strong>Property</strong></td>
+                    <td><t t-esc="property" /></td>
+                    <td ><strong>Delay Days</strong></td>
+                    <td><t t-esc="delay_days" /></td>
+                </tr>
+                <tr>
+                    <td><strong>Receipt Date</strong></td>
+                    <td><t t-esc="receipt_date" /></td>
+                    <td ><strong>Installment Status</strong></td>
+                    <td><t t-esc="installment_status"/></td>
+                </tr>
+                <tr>
+                    <td><strong>Due Date</strong></td>
+                    <td><t t-esc="due_date" /></td>
+                    <td><strong>Cheque Detail</strong></td>
+                    <td><t t-esc="cheque"/></td>
+                </tr>
+            </table>
+        <!--</t>-->
+    </template>
+
+    <template id="installment_template1">
+        <t t-call="website.layout">
+            <header class="modal-header">
+                <h3 class="modal-title">Installment Details</h3>
+                <!--<a href="http://samanadevelopers.com/pay/" style="background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;">pay-->
+                <!--</a>-->
+            </header>
+            <main class="modal-body">
+                  <a href="http://samanadevelopers.com/pay/" style="background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;">Pay
+                </a>
+                <br/>
+                <br/>
+            <table class="table table-bordered">
+                <tr>
+                    <td ><strong>Customer</strong></td>
+                    <td><t t-esc="customer" /></td>
+                    <td ><strong>Installment Amount</strong></td>
+                    <td><t t-esc="amount" /></td>
+                </tr>
+                <tr>
+                    <td ><strong>Booking</strong></td>
+                    <td><t t-esc="booking" /></td>
+                    <td><strong>Received Amount</strong></td>
+                    <td><t t-esc="receipt_total" /></td>
+                </tr>
+                <tr>
+                    <td ><strong>Sale</strong></td>
+                    <td><t t-esc="sale" /></td>
+                    <td><strong>Surcharge</strong></td>
+                    <td><t t-esc="surcharge" /></td>
+                </tr>
+                <tr>
+                    <td><strong>Project</strong></td>
+                    <td><t t-esc="project" /></td>
+                    <td ><strong>Overdue Amount</strong></td>
+                    <td><t t-esc="overdue" /></td>
+                </tr>
+                <tr>
+                    <td><strong>Property</strong></td>
+                    <td><t t-esc="property" /></td>
+                    <td ><strong>Delay Days</strong></td>
+                    <td><t t-esc="delay_days" /></td>
+                </tr>
+                <tr>
+                    <td><strong>Receipt Date</strong></td>
+                    <td><t t-esc="receipt_date" /></td>
+                    <td ><strong>Installment Status</strong></td>
+                    <td><t t-esc="installment_status"/></td>
+                </tr>
+                <tr>
+                    <td><strong>Due Date</strong></td>
+                    <td><t t-esc="due_date" /></td>
+                    <td><strong>Cheque Detail</strong></td>
+                    <td><t t-esc="cheque"/></td>
+                </tr>
+            </table>
+                <!--<select id="payments" name="paymentlist" class="form-control">-->
+                      <!--<option value="0">Payment Options</option>-->
+                       <!--<t t-foreach="all_payment_schedules or []" t-as="country">-->
+                            <!--<option t-att-value="country.id">-->
+                                <!--<t t-esc="country.name" />-->
+                            <!--</option>-->
+                        <!--</t>-->
+                    <!--</select>-->
+                <!--<div class="form-group row mb0">-->
+                    <!--<label for="page-name" class="col-md-9 col-form-label">-->
+                        <!--<p>The selected templates will be reset to their factory settings.</p>-->
+                        <!--<p>Type '<i class="confirm_word">yes</i>' in the box below if you want to confirm.</p>-->
+                    <!--</label>-->
+                    <!--<div class="col-md-3 mt16">-->
+                        <!--<input type="text" class="form-control" required="required" placeholder="yes"/>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </main>
+            <footer class="modal-footer">
+                <!--<button type="submit" class="btn btn-primary a-submit">pay-->
+                <!--</button>-->
+                <!--<a href="http://samanadevelopers.com/pay/">pay-->
+                <!--</a>-->
+                <!--<button type="button" class="btn" data-dismiss="modal" aria-label="Cancel">Cancel</button>-->
+            </footer>
+        </t>
+    </template>
+</odoo>
